@@ -11,6 +11,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include "keyValStore.h"
+#include "sub.h"
 
 #define BUFSIZE 1024 // Größe des Buffers
 #define TRUE 1
