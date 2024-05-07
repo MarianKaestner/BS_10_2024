@@ -1,13 +1,10 @@
-//
-// Created by maria on 01.05.2024.
-//
+#ifndef KEYVALSTORE_H
+#define KEYVALSTORE_H
 
-#ifndef BS_10_2024_KEYVALSTORE_H
-#define BS_10_2024_KEYVALSTORE_H
+#define ARRAY_SIZE 100
 
-#endif //BS_10_2024_KEYVALSTORE_H
+int put(char* key, char* value);
+int get(char* key, char** res);
+int del(char* key);
 
-int put(char *key, char *value);
-int get(char *key, char *res);
-int del(char *key);
-
+#endif //KEYVALSTORE_H
