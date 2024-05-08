@@ -4,7 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/tmp/tmp.7hmhNDNUfQ/main.c" "/tmp/tmp.7hmhNDNUfQ/cmake-build-docker/CMakeFiles/BS_10_2024.dir/main.c.o"
+  "/tmp/BS_10_2024/keyValStore.c" "/tmp/BS_10_2024/cmake-build-docker/CMakeFiles/BS_10_2024.dir/keyValStore.c.o"
+  "/tmp/BS_10_2024/main.c" "/tmp/BS_10_2024/cmake-build-docker/CMakeFiles/BS_10_2024.dir/main.c.o"
+  "/tmp/BS_10_2024/sharedMemory.c" "/tmp/BS_10_2024/cmake-build-docker/CMakeFiles/BS_10_2024.dir/sharedMemory.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

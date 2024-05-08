@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/BS_10_2024.dir/main.c.o  -o BS_10_2024 
+/usr/bin/cc -g   CMakeFiles/BS_10_2024.dir/main.c.o CMakeFiles/BS_10_2024.dir/keyValStore.c.o CMakeFiles/BS_10_2024.dir/sharedMemory.c.o  -o BS_10_2024 

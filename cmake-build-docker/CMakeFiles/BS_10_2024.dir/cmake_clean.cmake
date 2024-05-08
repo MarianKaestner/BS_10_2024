@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/BS_10_2024.dir/main.c.o"
+  "CMakeFiles/BS_10_2024.dir/keyValStore.c.o"
+  "CMakeFiles/BS_10_2024.dir/sharedMemory.c.o"
   "BS_10_2024.pdb"
   "BS_10_2024"
 )

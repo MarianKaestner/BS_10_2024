@@ -1,4 +1,8 @@
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /tmp/tmp.zrPmam0TKJ
--- Configuring done
--- Generating done
--- Build files have been written to: /tmp/tmp.zrPmam0TKJ/cmake-build-docker
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /tmp/BS_10_2024
+CMake Error at CMakeLists.txt:9:
+  Parse error.  Expected a command name, got unquoted argument with text
+  "=======".
+
+
+-- Configuring incomplete, errors occurred!
+See also "/tmp/BS_10_2024/cmake-build-docker/CMakeFiles/CMakeOutput.log".

@@ -19,8 +19,8 @@ int put(char* key, char* value) {
         fprintf(stderr, "key or value cannot be NULL!\n");
         return -1;
     }
-
-    int index = get(key, NULL);
+    char *res;
+    const int index = get(key, &res);
 
     if (index < 0) {
         if (count < ARRAY_SIZE - 1) {
@@ -63,12 +63,12 @@ int get(char* key, char** res) {
 }
 
 int del(char* key) {
-    char* res = NULL;
-    int index = get(key, &res);
+	char* res = NULL;
+    const int index = get(key, &res);
 
     if (index < 0) {
-        return -1;
-    }
+		return -1;
+	}
 
     free(data[index].key);
     free(data[index].value);
