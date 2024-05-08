@@ -1,0 +1,108 @@
+# CLion specific
+.idea/
+*.iml
+
+# CMake specific
+cmake-build*/
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+Makefile
+cmake_install.cmake
+*.cmake
+
+# Build output
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.out
+*.app
+*.i*
+*.s
+*.su
+*.d
+*.mod*
+*.ilk
+*.map
+*.exp
+*.lib
+*.pdb
+*.bundle
+*.ncb
+*.plg
+*.opt
+*.obj
+*.manifest
+*.res
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.mtc
+*.mtl
+*.log
+*.tlog
+*.lastbuildstate
+
+# Dependencies
+deps/
+
+# External libraries
+external/
+
+# Obfuscated files
+obfuscated/
+
+# Ignore specific configuration files that may contain sensitive info
+config.*
+
+# Object files and archives
+*.slo
+*.lo
+*.la
+# .lib files may be static libraries - uncomment if not needed
+#*.lib
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Dynamic libraries
+*.dylib
+*.so
+*.dll
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Generated files by Sphinx documentation
+docs/_build/
+
+# Logs
+logs/
+*.log
+
+# JetBrains Rider
+.rider/
