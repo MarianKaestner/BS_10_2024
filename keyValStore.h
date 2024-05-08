@@ -1,7 +1,3 @@
-//
-// Created by annic on 28.04.2024.
-//
-
 #ifndef KEYVALSTORE_H
 #define KEYVALSTORE_H
 
