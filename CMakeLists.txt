@@ -7,5 +7,5 @@ add_executable(BS_10_2024 main.c
         main.h
         keyValStore.h
         keyValStore.c
-        sharedMemory.c
+        semaphore.c
 )

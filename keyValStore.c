@@ -5,83 +5,61 @@
 #include <stdlib.h>
 
 int count = -1;
-
-typedef struct _Data{
-    char *key;
-    char *value;
-} Data;
-
-
-Data data[ARRAY_SIZE];
+Data *data;
 
 int put(char* key, char* value) {
     if (key == NULL || value == NULL) {
         fprintf(stderr, "key or value cannot be NULL!\n");
         return -1;
     }
-    char *res;
-    const int index = get(key, &res);
-
-    if (index < 0) {
-        if (count < ARRAY_SIZE - 1) {
-            data[++count].key = strdup(key);
-            data[count].value = strdup(value);
-            if (data[count].key == NULL || data[count].value == NULL) {
-                fprintf(stderr, "memory allocation failed!\n");
-                return -1;
-            }
-        } else {
-            fprintf(stderr, "array full!\n");
-            return -1;
-        }
-    } else {
-        free(data[index].value);
-        data[index].value = strdup(value);
-        if (data[index].value == NULL) {
-            fprintf(stderr, "memory allocation for new value failed!\n");
-            return -1;
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (strncmp(data[i].key, key, KEY_SIZE) == 0) {
+            strncpy(data[i].value, value, VAL_SIZE);
+            data[i].value[VAL_SIZE - 1] = '\0';
+            return 0;
         }
     }
 
-    return 0;
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (data[i].key[0] == '\0') {
+            strncpy(data[i].key, key, KEY_SIZE);
+            data[i].key[KEY_SIZE - 1] = '\0';
+
+            strncpy(data[i].value, value, VAL_SIZE);
+            data[i].value[VAL_SIZE - 1] = '\0';
+            return 0;
+        }
+    }
+    fprintf(stderr, "No space left in key-value store.\n");
+    return -1;
 }
 
 int get(char* key, char** res) {
     if (key == NULL || res == NULL) {
-        fprintf(stderr, "invalid pointer!\n");
+        fprintf(stderr, "Invalid pointers in get operation.\n");
         return -1;
     }
-
-    for (int i = 0; i <= count; i++) {
-        if (strcmp(data[i].key, key) == 0) {
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (strncmp(data[i].key, key, KEY_SIZE) == 0) {
             *res = data[i].value;
-            return i;
+            return 0;
         }
     }
-
     return -1;
 }
 
 int del(char* key) {
-	char* res = NULL;
-    const int index = get(key, &res);
-
-    if (index < 0) {
-		return -1;
-	}
-
-    free(data[index].key);
-    free(data[index].value);
-
-    data[index].key = NULL;
-    data[index].value = NULL;
-
-    for (int i = index; i < count; i++) {
-        data[i] = data[i + 1];
+    if (key == NULL) {
+        fprintf(stderr, "Invalid pointer in delete operation.\n");
+        return -1;
     }
-
-    count--;
-    return 0;
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (strncmp(data[i].key, key, KEY_SIZE) == 0) {
+            data[i].key[0] = '\0';
+            return 0;
+        }
+    }
+    return -1;
 }
 
 
