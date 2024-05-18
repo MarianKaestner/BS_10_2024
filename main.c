@@ -67,7 +67,7 @@ int initShm() {
     return 0;
 }
 
-void put(char* command, char* key, char* value, char *response) {
+void putKey(char* command, char* key, char* value, char *response) {
     value = strtok(NULL, " ");
     if (value == NULL) {
         snprintf(response, BUFFSIZE, "> value missing for PUT!\n");
@@ -78,7 +78,7 @@ void put(char* command, char* key, char* value, char *response) {
     }
 }
 
-void get(char* command, char* key, char *response) {
+void getKey(char* command, char* key, char *response) {
     char* res = NULL;
     if (get(key, &res) > -1) {
         snprintf(response, BUFFSIZE, "> %s:%s:%s\n", command, key, res);
@@ -87,7 +87,7 @@ void get(char* command, char* key, char *response) {
     }
 }
 
-void del(char* command, char* key, char *response) {
+void delKey(char* command, char* key, char *response) {
     if (del(key) > -1) {
         snprintf(response, BUFFSIZE, "> %s:%s:key_deleted\n", command, key);
     } else {
@@ -132,9 +132,9 @@ void processClientCommands(const int cfd) {
         char* value = NULL;
         char response[BUFFSIZE];
 
-        if (strcmp(command, PUT) == 0) put(command, key, value, response);
-        else if (strcmp(command, GET) == 0) get(command, key, response);
-        else if (strcmp(command, DEL) == 0) del(command, key, response);
+        if (strcmp(command, PUT) == 0) putKey(command, key, value, response);
+        else if (strcmp(command, GET) == 0) getKey(command, key, response);
+        else if (strcmp(command, DEL) == 0) delKey(command, key, response);
         else if(strcmp(command, QUIT) == 0) {
             printf("connection closed!\n");
             break;
