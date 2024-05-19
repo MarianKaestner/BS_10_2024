@@ -1,3 +1,7 @@
+# test files
+./semaphore_.c
+./sharedMemory_.c
+
 # CLion specific
 .idea/
 *.iml
