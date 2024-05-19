@@ -7,5 +7,10 @@ add_executable(BS_10_2024 main.c
         main.h
         keyValStore.h
         keyValStore.c
+        clientRequestHandler.c
+        sub.h
         semaphore.c
+        semaphore.h
+        shared_memory.c
+        shared_memory.h
 )

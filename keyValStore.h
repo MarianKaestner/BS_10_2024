@@ -10,10 +10,8 @@ typedef struct {
     char value[VAL_SIZE];
 } Data;
 
-extern Data *data;
-
-int put(char* key, char* value);
-int get(char* key, char** res);
-int del(char* key);
+int put(Data *data, char* key, char* value);
+int get(Data *data, char* key, char** res);
+int del(Data *data, char* key);
 
 #endif //KEYVALSTORE_H

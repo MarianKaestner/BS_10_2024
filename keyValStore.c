@@ -5,9 +5,8 @@
 #include <stdlib.h>
 
 int count = -1;
-Data *data;
 
-int put(char* key, char* value) {
+int put(Data *data, char* key, char* value) {
     if (key == NULL || value == NULL) {
         fprintf(stderr, "key or value cannot be NULL!\n");
         return -1;
@@ -34,7 +33,7 @@ int put(char* key, char* value) {
     return -1;
 }
 
-int get(char* key, char** res) {
+int get(Data *data, char* key, char** res) {
     if (key == NULL || res == NULL) {
         fprintf(stderr, "Invalid pointers in get operation.\n");
         return -1;
@@ -48,7 +47,7 @@ int get(char* key, char** res) {
     return -1;
 }
 
-int del(char* key) {
+int del(Data *data, char* key) {
     if (key == NULL) {
         fprintf(stderr, "Invalid pointer in delete operation.\n");
         return -1;
@@ -56,6 +55,7 @@ int del(char* key) {
     for (int i = 0; i < ARRAY_SIZE; i++) {
         if (strncmp(data[i].key, key, KEY_SIZE) == 0) {
             data[i].key[0] = '\0';
+            data[i].value[0] = '\0';
             return 0;
         }
     }
