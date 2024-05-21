@@ -1,9 +1,11 @@
 #include "main.h"
 #include "keyValStore.h"
-#include "shared_memory.h"
+#include "sharedMemory.h"
 #include "semaphore.h"
 #include "clientRequestHandler.h"
 
+#include <stdbool.h>
+#include <string.h>
 #include <signal.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -17,8 +19,14 @@
 #define PORT 5678
 
 int main(void) {
-    Data *data;
+    Data* data;
+    bool transaction = false;
     int rfd, cfd;
+
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = &cleanUp;
+    sigaction(SIGINT, &sa, NULL);
 
     struct sockaddr_in client;
     socklen_t client_len;
@@ -52,7 +60,8 @@ int main(void) {
         exit(-1);
     }
 
-    if(semInit() < 0) {
+    int sem_id;
+    if(semInit(&sem_id, 1) < 0) {
         fprintf(stderr, "failed to initialize semaphore\n");
         exit(1);
     }
@@ -79,7 +88,7 @@ int main(void) {
 
         if (pid == 0) {
             close(rfd);
-            handleClient(data, cfd);
+            handleClient(data, cfd, &sem_id, &transaction);
             exit(0);
         }
         else {

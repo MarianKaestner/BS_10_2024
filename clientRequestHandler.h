@@ -3,14 +3,18 @@
 
 #include "keyValStore.h"
 
-void handleClient(Data* data, int cfd);
+#include <stdbool.h>
 
-void handlePut(Data* data, const char* command, char *response);
-void handleGet(Data* data, const char* command, char *response);
-void handleDel(Data* data, const char* command, char *response);
-void handleBeg(const char* command, char *response);
-void handleEnd(const char* command, char *response);
+void handleClient(Data* data, int cfd, int* sem_id, bool* transaction);
+
+void handlePut(Data* data, char *response, int* sem_id, bool* transaction);
+void handleGet(Data* data, char *response, int* sem_id, bool* transaction);
+void handleDel(Data* data, char *response, int* sem_id, bool* transaction);
+void handleBeg(char *response, int* sem_id, bool* transaction);
+void handleEnd(char *response, int* sem_id, bool* transaction);
 
 void trimMessage(char *in);
+
+void cleanUp(int signum);
 
 #endif //BS_10_2024_SUB_H

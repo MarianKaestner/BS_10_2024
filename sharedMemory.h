@@ -4,6 +4,6 @@
 #include "keyValStore.h"
 
 int shmInit(Data** seg);
-void shmCleanUp(int signum);
+void shmCleanUp();
 
 #endif //SHARED_MEMORY_H

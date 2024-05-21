@@ -1,7 +1,6 @@
-#include "shared_memory.h"
+#include "sharedMemory.h"
 
 #include <signal.h>
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/shm.h>
@@ -10,11 +9,6 @@ Data *seg_global;
 int shm_id;
 
 int shmInit(Data** seg) {
-    struct sigaction sa;
-    memset(&sa, 0, sizeof(sa));
-    sa.sa_handler = &shmCleanUp;
-    sigaction(SIGINT, &sa, NULL);
-
     shm_id = shmget(IPC_PRIVATE, (ARRAY_SIZE * sizeof(Data)), IPC_CREAT | 0600);
     if (shm_id < 0) {
         perror("shmget failed");
@@ -33,7 +27,7 @@ int shmInit(Data** seg) {
     return 0;
 }
 
-void shmCleanUp(int signum) {
+void shmCleanUp() {
     if (seg_global != NULL) {
         shmdt(seg_global);
         seg_global = NULL;
