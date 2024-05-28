@@ -3,4 +3,14 @@ project(BS_10_2024 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(BS_10_2024 main.c)
+add_executable(BS_10_2024 main.c
+        main.h
+        keyValStore.h
+        keyValStore.c
+        clientHandler.c
+        clientHandler.h
+        semaphore.c
+        semaphore.h
+        sharedMemory.c
+        sharedMemory.h
+)

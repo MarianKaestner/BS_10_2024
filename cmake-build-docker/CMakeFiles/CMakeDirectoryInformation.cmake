@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/tmp/BS_10_2024")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/tmp/BS_10_2024/cmake-build-debug")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/tmp/BS_10_2024/cmake-build-docker")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)
