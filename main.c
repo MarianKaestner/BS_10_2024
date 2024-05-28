@@ -2,7 +2,7 @@
 #include "keyValStore.h"
 #include "sharedMemory.h"
 #include "semaphore.h"
-#include "clientRequestHandler.h"
+#include "clientHandler.h"
 
 #include <stdbool.h>
 #include <string.h>
