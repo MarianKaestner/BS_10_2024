@@ -1,7 +1,6 @@
 #include "semaphore.h"
 #include "main.h"
 #include "keyValStore.h"
-#include "sharedMemory.h"
 
 #include <signal.h>
 #include <ctype.h>

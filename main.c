@@ -1,8 +1,8 @@
 #include "main.h"
 #include "keyValStore.h"
-#include "sharedMemory.h"
 #include "semaphore.h"
 #include "clientHandler.h"
+#include "sub.h"
 
 #include <stdbool.h>
 #include <string.h>
@@ -15,12 +15,14 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#define TRUE 1
 #define PORT 5678
 
 int main(void) {
-    Data* data;
+    KeyVal* data;
+
+    //TODO: shared memory!!!
     bool transaction = false;
+
     int rfd, cfd;
 
     struct sigaction sa;
@@ -60,20 +62,31 @@ int main(void) {
         exit(-1);
     }
 
+    printf("initializing semaphore...\n");
     int sem_id;
     if(semInit(&sem_id, 1) < 0) {
         fprintf(stderr, "failed to initialize semaphore\n");
         exit(1);
     }
 
-    if(shmInit(&data) < 0) {
-        fprintf(stderr, "failed to initialize shared memory\n");
+    printf("initializing key value store...\n");
+    int key_val_shm_id;
+    if(initKeyValStore(&data, &key_val_shm_id) < 0) {
+        fprintf(stderr, "failed to initialize key value store\n");
+        exit(1);
+    }
+
+    printf("initializing subscription pool...\n");
+    SubPool* pool;
+    int sub_shm_id;
+    if(initSubPool(&pool, &sub_shm_id)) {
+        fprintf(stderr, "failed to initialize subscription pool\n");
         exit(1);
     }
 
     printf("Server running on port %d.\n", PORT);
 
-    while (TRUE) {
+    while (true) {
         printf("waiting for client...\n");
 
         client_len = sizeof(client);
@@ -85,10 +98,14 @@ int main(void) {
 
         printf("client accepted!\n");
         pid_t pid = fork();
+        if(pid < 0) {
+            fprintf(stderr, "fork failed\n");
+            exit(-1);
+        }
 
         if (pid == 0) {
             close(rfd);
-            handleClient(data, cfd, &sem_id, &transaction);
+            handleClient(data, cfd, &sem_id, &transaction, pool);
             exit(0);
         }
         else {
