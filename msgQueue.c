@@ -34,7 +34,7 @@ int msgSend(int msid, CmdType cmdType, char* key, char* value) {
 
 	if(rc < 0) {
 		perror("Fehler beim Schreiben in die Nachrichtenwarteschlange");
-		printf("Detaillierter Fehler: %s\n", strerror(errno)); // Bietet detailliertere Fehlerinformationen
+		printf("Detaillierter Fehler: %s\n", strerror(errno));
 		return -1;
 	}
 
@@ -49,11 +49,10 @@ int msgReceive(int msid, Msg* msg) {
 
 	if(rc < 0) {
 		perror("Fehler beim Lesen aus der Nachrichtenwarteschlange");
-		printf("Detaillierter Fehler: %s\n", strerror(errno)); // Bietet detailliertere Fehlerinformationen
+		printf("Detaillierter Fehler: %s\n", strerror(errno));
 		return -1;
 	}
 
-	// Geht davon aus, dass CmdType, Key und Value korrekt gesetzt sind; ggf. Anpassung erforderlich
 	printf("Empfangene Nachricht: CmdType: %d, Key: '%s', Value: '%s'\n", msg->cmdType, msg->key ? msg->key : "NULL", msg->value ? msg->value : "NULL");
 
 	return 0;

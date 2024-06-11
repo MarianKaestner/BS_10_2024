@@ -11,6 +11,8 @@ void handleClient(KeyVal* keyValStore, const int cfd, int* sem_id, bool* transac
 void handleConnection(KeyVal* keyValStore, const int cfd, int* sem_id, bool* transaction, SubPool* pool, int msid);
 void handleMsgReceive(int cfd, SubPool* pool, int msid);
 
+void signalHandler(int sig);
+
 void handlePut(KeyVal* data, SubPool* pool, int msid, char *response, int* sem_id, bool* transaction, char* in_r);
 void handleGet(KeyVal* data, char *response, int* sem_id, bool* transaction, char* in_r);
 void handleDel(KeyVal* data, SubPool* pool, int msid, char *response, int* sem_id, bool* transaction, char* in_r);

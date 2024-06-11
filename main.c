@@ -20,7 +20,6 @@
 int main(void) {
     KeyVal* data;
 
-    //TODO: shared memory!!!
     bool transaction = false;
 
     int rfd, cfd;

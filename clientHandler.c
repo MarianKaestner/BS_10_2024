@@ -7,9 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include <sys/socket.h>
 
 #define BUFFSIZE 1024
+int global_cfd;
 
 const char* CmdTypeNames[] = {
     "PUT",
@@ -37,10 +39,24 @@ void handleClient(KeyVal* keyValStore, const int cfd, int* sem_id, bool* transac
     }
 
     if (pid == 0) {
+        global_cfd = cfd;
+        signal(SIGTERM, signalHandler);
         handleMsgReceive(cfd, pool, msid);
     }
-    else {
+    else{
         handleConnection(keyValStore, cfd, sem_id, transaction, pool, msid);
+        close(cfd);
+        kill(pid, SIGTERM);
+        waitpid(pid, NULL, 0);
+    }
+
+    close(cfd);
+}
+
+void signalHandler(int sig) {
+    if(sig == SIGTERM) {
+        close(global_cfd);
+        exit(0);
     }
 }
 
@@ -51,7 +67,7 @@ void handleMsgReceive(int cfd, SubPool* pool, int msid) {
 
         if(msgReceive(msid, &msg)) {
             fprintf(stderr, "Fehler beim Empfangen einer Nachricht aus der Warteschlange: %d\n", msid);
-            exit(-1);
+            break;
         }
 
         printf("Nachricht empfangen: CmdType: %d, Key: %s, Value: %s\n", msg.cmdType, msg.key, msg.value);
@@ -89,12 +105,10 @@ void handleConnection(KeyVal* keyValStore, const int cfd, int* sem_id, bool* tra
         else if (strcmp(cmd, CmdTypeNames[DEL]) == 0) handleDel(keyValStore, pool, msid, response, sem_id, transaction, in_r);
         else if (strcmp(cmd, CmdTypeNames[BEG]) == 0) handleBeg(response, sem_id, transaction);
         else if (strcmp(cmd, CmdTypeNames[END]) == 0) handleEnd(response, sem_id, transaction);
-        else if (strcmp(cmd, CmdTypeNames[SUB]) == 0) {
-            printf("SUB!!!\n");
-            handleSub(keyValStore, pool, msid, response, in_r);
-        }
+        else if (strcmp(cmd, CmdTypeNames[SUB]) == 0) handleSub(keyValStore, pool, msid, response, in_r);
         else if(strcmp(cmd, CmdTypeNames[QUIT]) == 0) {
             printf("closing connection...!\n");
+            sendMessage(cfd, "> closing connection...\n");
             return;
         }
         else{
@@ -219,6 +233,10 @@ void handleSub(KeyVal* keyValStore, SubPool* pool, int msid, char* response, cha
     else {
         snprintf(response, BUFFSIZE, "> subscription to key '%s' failed", key);
     }
+}
+
+void handleQuit() {
+
 }
 
 void trimMessage(char *in) {
